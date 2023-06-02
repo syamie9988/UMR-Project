@@ -84,6 +84,7 @@ const General = () => {
   ];
 
   return (
+    
     <Box m="9px">
       
       <Box display="flex" alignItems="center">
