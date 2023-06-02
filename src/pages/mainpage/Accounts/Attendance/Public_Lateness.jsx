@@ -1,41 +1,18 @@
-import { Box, useTheme, Breadcrumbs, Link, TextField } from "@mui/material";
+import { Box, useTheme, Typography, TextField, InputAdornment, MenuItem, FormControl, Select } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../../components/theme";
 import { mockDataAttendance } from "../../../../data/mockData";
-import Header from "../../../../components/Header";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import SearchIcon from "@mui/icons-material/Search";
+import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Public_Lateness = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "no", headerName: "NO" ,headerAlign: "center",
-    align: "center",},
     
-    {
-      field: "ThumbprintId",
-      headerName: "ThumbprintId",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      
-    },
-    {
-      field: "EmployeeId",
-      headerName: "EmployeeId",
-      type: "number",
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      headerAlign: "center",
-      align: "center",
-      
-    },
     {
       field: "PH_Day",
       headerName: "PH (Day)",
@@ -106,36 +83,91 @@ const Public_Lateness = () => {
     },
   ];
 
+  const [dropdownValue, setDropdownValue] = useState("");
+
+  const handleDropdownChange = (event) => {
+    setDropdownValue(event.target.value);
+  };
+
   return (
-    <Box m="20px">
-      <Header title="Accounting" subtitle="Worker Attendance" />
-      <Box display="flex" alignItems="center">
-        <Breadcrumbs separator=">" aria-label="breadcrumb">
-          <Link color="inherit" href="/General">
-            General
-          </Link>
-          <Link color="inherit" href="/daily">
-            Daily
-          </Link>
-          <Link color="inherit" href="/Normal_Rest_Day">
-            Normal/Rest Day
-          </Link>
-          <Link color="textPrimary" href="/Public_Lateness">
-            Public/Lateness
-          </Link>
-          
-        </Breadcrumbs>
-        <TextField
-          id="search-bar"
-          label="Search"
-          variant="outlined"
-          size="small"
-          sx={{ ml: "auto", width: 200 }}
-        />
+    <Box m="15px">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: "20px" }}
+      >
+
+<Box>
+  <Typography variant="h6" sx={{ fontFamily: 'Tahoma', fontSize: '20px' , fontWeight: 'bold' }}>Jon Snow</Typography> 
+  <Typography variant="h6" sx={{ fontFamily: 'Arial', fontSize: '15px', fontStyle : 'italic' }}>12345</Typography>
+</Box>
+
+
+
+<Box display="flex" alignItems="center">
+  <FormControl variant="outlined" size="small" sx={{ ml: 1 }}>
+    <Select
+      value={dropdownValue}
+      onChange={handleDropdownChange}
+      displayEmpty
+      inputProps={{ "aria-label": "Select" }}
+      sx={{ minWidth: 120 }} // Set the desired minimum width
+    >
+      <MenuItem value="option1">
+        <Link to="/daily" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box display="flex" alignItems="center" px={1} py={0.2}>
+            <Typography variant="body2">Daily</Typography>
+          </Box>
+        </Link>
+      </MenuItem>
+      
+      <MenuItem value="option2">
+        <Link to="/Normal_Rest_Day" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box display="flex" alignItems="center" px={1} py={0.2}>
+            <Typography variant="body2">Normal Day/Rest Day</Typography>
+          </Box>
+        </Link>
+      </MenuItem>
+
+      <MenuItem value="">
+        <Link to="/Public_Lateness" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box display="flex" alignItems="center" px={1} py={0.2}>
+            <Typography variant="body2">Public Day/Lateness</Typography>
+          </Box>
+        </Link>
+      </MenuItem>
+
+      <MenuItem value="option4">
+        <Link to="/Additional" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box display="flex" alignItems="center" px={1} py={0.2}>
+            <Typography variant="body2">Additional</Typography>
+          </Box>
+        </Link>
+      </MenuItem>
+    </Select>
+  </FormControl>
+  <TextField
+    id="search-bar"
+    label="Search"
+    variant="outlined"
+    size="small"
+    sx={{ width: 300 }}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon />
+        </InputAdornment>
+      ),
+    }}
+  />
+</Box>
+
+
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="72vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
